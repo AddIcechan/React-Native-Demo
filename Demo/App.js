@@ -6,11 +6,11 @@
 
 import React, { Component } from 'react';
 import {
-  Platform,
   StyleSheet,
   Text,
   View,
   ListView,
+  TouchableOpacity,
 } from 'react-native';
 
 import { createStackNavigator } from 'react-navigation';
@@ -38,26 +38,22 @@ class HomeScreen extends Component {
 
   render(){
     return(
-      // <View style={styles.container}>
-      //   <Text style={styles.welcome}>
-      //     Hello world!
-      //   </Text>
-      // </View>
       <ListView
         dataSource={this.state.dataSource}
-        renderRow={this.renderRow}
-        renderSeparator={this.renderSeparator}
-
-      >
-
-      </ListView>
+        renderRow={this._renderRow}
+        renderSeparator={this._renderSeparator}>
+        </ListView>
     );
   }
 
   _renderRow = (rowData, sectionID, rowID, highlightRow) => {
           let rowIndex = Number(rowID) + 1;
           return (
-            <Text style={styles.rowTitle}> {rowIndex}. {rowData} </Text>
+            <TouchableOpacity onPress={ () => {
+                alert(rowIndex+rowData);
+            } }>
+              <Text style={styles.rowTitle}> {rowIndex}. {rowData} </Text>
+            </TouchableOpacity>
           );
 
   } ;
