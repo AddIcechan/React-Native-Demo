@@ -9,50 +9,88 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  ListView,
 } from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import { createStackNavigator } from 'react-navigation';
 
-type Props = {};
-export default class App extends Component<Props> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
-      </View>
+const dataList = [
+  "豆瓣影院热映",
+  "天气",
+];
+
+class HomeScreen extends Component {
+
+  static navigationOptions = {
+      title: "home",
+  }
+
+  constructor(props) {
+    super(props);
+    let ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+    });
+    this.state = {
+      dataSource: ds.cloneWithRows(dataList)
+    }
+  }
+
+  render(){
+    return(
+      // <View style={styles.container}>
+      //   <Text style={styles.welcome}>
+      //     Hello world!
+      //   </Text>
+      // </View>
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={this.renderRow}
+        renderSeparator={this.renderSeparator}
+
+      >
+
+      </ListView>
     );
   }
+
+  _renderRow = (rowData, sectionID, rowID, highlightRow) => {
+          let rowIndex = Number(rowID) + 1;
+          return (
+            <Text style={styles.rowTitle}> {rowIndex}. {rowData} </Text>
+          );
+
+  } ;
+
+  _renderSeparator = (sectionID, rowID, adjacentRowHighlighted) => {
+      return <View style={styles.separator}/>;
+  };
+
+  
+  
+
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+  
+  rowTitle: {
+      fontSize: 18,
+      textAlign: 'left',
+      margin: 20,
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+
+  separator: {
+    backgroundColor: 0x313131,
+    height:1,
+  }
+
+});
+
+export default createStackNavigator({
+  Home: {
+    screen: HomeScreen
   },
 });
+
+
+
