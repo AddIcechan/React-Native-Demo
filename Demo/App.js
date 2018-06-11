@@ -9,14 +9,15 @@ import {
   StyleSheet,
   Text,
   View,
-  ListView,
   FlatList,
   TouchableOpacity,
   Image,
   Alert
 } from 'react-native';
 
-import { createStackNavigator } from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
+
+import DoubanMovie from "./app/day01/DoubanMovie";
 
 const dataList = [
   {key: 'a' ,title:"豆瓣影院热映"},
@@ -25,20 +26,13 @@ const dataList = [
 class HomeScreen extends Component {
 
   static navigationOptions = {
-      title: "home",
-  }
-
-  constructor(props) {
-    super(props);
-    let ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2
-    });
-    this.state = {
-      dataSource: ds.cloneWithRows(dataList)
-    }
+      title: "Home",
   }
 
   render(){
+
+    const { navigation } = this.props;
+
     return(
       <FlatList
       // data={[{key: 'a'}, {key: 'b'}]}
@@ -59,9 +53,9 @@ class HomeScreen extends Component {
     let rowIndex = Number(index) + 1;
     return (
       <TouchableOpacity style={styles.container} 
-      onPress={() => { Alert.alert(item.key, item.title) } }>
+      onPress={() => { this._onPress(index) } }>
         <Text style={styles.rowTitle}> {rowIndex}. {item.title} </Text>
-        <Image style={styles.rowIndicator} source={require('./sources/indicator_right.png')} />
+        <Image source={require('./sources/indicator_right.png')} />
       </TouchableOpacity>
     );
   };
@@ -70,28 +64,45 @@ class HomeScreen extends Component {
       return <View style={styles.separator}/>;
   };
 
-  _onPress = (title:string, index) => {
-    alert(index+title);
+  _onPress = (index) => {
+      switch (index) {
+        case 0:
+          {
+              this.props.navigation.push('DoubanMovie');
+          }
+          break;
+      
+        default:
+          break;
+      };
   };
   
 
 }
+
+export default class App extends Component {
+  render() {
+    return <RootStack/>;
+  }
+}
+
+const RootStack = StackNavigator(
+  {
+    Home: HomeScreen,
+    DoubanMovie: DoubanMovie,
+  },
+);
 
 const styles = StyleSheet.create({
   
   rowTitle: {
       fontSize: 18,
       textAlign: 'left',
-      margin: 20,
   },
 
   separator: {
     backgroundColor: 0x313131,
     height:1,
-  },
-
-  rowIndicator: {
-      marginRight: 20,
   },
 
   container: {
@@ -100,15 +111,7 @@ const styles = StyleSheet.create({
       backgroundColor: 'white',
       justifyContent: 'space-between',
       alignItems: 'center',
+      padding: 20,
   },
 
 });
-
-export default createStackNavigator({
-  Home: {
-    screen: HomeScreen
-  },
-});
-
-
-
