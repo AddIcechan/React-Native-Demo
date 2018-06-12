@@ -14,34 +14,26 @@ import {
 
 const inTheatersURL = "https://api.douban.com/v2/movie/in_theaters";
 
-type Item = {rating: {max: int, average: int, stars: string, min: int },
-            genres: [string],
-            actors: [string],
-            year: string,
-            alt: string,
-            id: string,
-            title: string,
-            poster: string, };
 
 class MovieCell extends Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     render(){
         return(
 
             <View style={styles.container}>
 
-                <Image style={styles.moviePoster} source={{uri: this.props.item.poster}} />
+                <Image style={styles.moviePoster} source={{uri: this.props.item.images[1]}} />
                     
                 <View style={styles.columnContainer} >
                     <Text style={styles.movieTitle}> 
                         {this.props.item.title}
                     </Text>
                     <Text style={styles.movieInfo}>
-                        {this.props.item.actors[0]}
+
+                        {
+                            
+                        }
+
                     </Text>
                 </View>
 
@@ -79,17 +71,41 @@ const testData = [
         "original_title": "Black Water",
         "subtype": "movie",
         "year": "2018",
-        "poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2521514516.webp",
+        "poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2523364763.jpg",
         "alt": "https://movie.douban.com/subject/26949264/",
         "id": "26949264"
     } ];
 
 export default class DoubanMovie extends React.Component {  
 
-  render() {
+    constructor(props) {
+
+        super(props);
+
+        this.state = {
+            noneData: [],
+        };
+
+        fetch(inTheatersURL)
+        .then((response) => response.json())
+        .then( (responseJSON) => {
+            console.log(responseJSON.subjects);
+            
+            this.setState({
+                items: responseJSON.subjects
+            });
+        })
+        .catch(error =>  { 
+            console.error(); 
+        });
+
+    };
+
+ render() {
     return (
+        
         <FlatList 
-        data={testData}
+        data={this.state.items ? this.state.items : this.state.noneData}
         renderItem = {this._renderItem}
         keyExtractor = {this._keyExtractor}
          />
@@ -103,6 +119,7 @@ export default class DoubanMovie extends React.Component {
         <MovieCell item={item}/>
       );
   };
+
 
 
 }
