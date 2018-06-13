@@ -19,7 +19,6 @@ class MovieCell extends Component {
     static navigationOptions = {
         title: "Douban Movie",
     }
-
     render(){
 
         return(
@@ -41,7 +40,7 @@ class MovieCell extends Component {
                     </Text>
                 </View>
 
-                <View style={[styles.columnContainer, {flex: 1,}]}>
+                <View style={[styles.columnContainer, {flex: 1,alignItems:'center'}]}>
                     <Text style={styles.peopleWatch}> {this.props.item.collect_count} 人看过 </Text>
                     <TouchableHighlight style={styles.buyBtn} 
                     onPress={() => alert("这是个假功能")}> 
@@ -127,9 +126,10 @@ export default class DoubanMovie extends React.Component {
 
         this.state = {
             noneData: [],
+            _refreshing: true
         };
 
-        this._refreshControl();
+        this._onRefresh();
 
     };
 
@@ -138,10 +138,12 @@ export default class DoubanMovie extends React.Component {
         
         <FlatList 
         // 因为网络数据加载是异步的，所以这里的 data 需要进行判断。可以是 this.state.items ? this.state.items : [] , 也可以是如下面给个初值
-        data={this.state.items ? this.state.items : this.state.noneData}
+        data={this.state._refreshing ? this.state.noneData : (this.state.items ? this.state.items : this.state.noneData )}
         renderItem = {this._renderItem}
         keyExtractor = {this._keyExtractor}
-        refreshControl = {this._refreshControl}
+        onRefresh={this._onRefresh}
+        refreshing={this.state._refreshing}
+
          />
     );
   }
@@ -154,17 +156,26 @@ export default class DoubanMovie extends React.Component {
       );
   };
 
-  _refreshControl = () => {
+  _onRefresh = () => {
+
+    this.setState({
+        _refreshing: true,
+    });
+
     fetch(inTheatersURL)
     .then((response) => response.json())
     .then( (responseJSON) => {
         console.log(responseJSON.subjects);
         
         this.setState({
+            _refreshing: false,
             items: responseJSON.subjects
         });
     })
     .catch(error =>  { 
+        this.setState({
+            _refreshing: false,
+        });
         console.error(); 
     });
   };
