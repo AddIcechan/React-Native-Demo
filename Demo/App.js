@@ -18,9 +18,11 @@ import {
 import { StackNavigator } from 'react-navigation';
 
 import DoubanMovie from "./app/day01/DoubanMovie";
+import FlexboxDemo from "./app/FlexboxDemo/FlexboxDemo";
 
 const dataList = [
   {key: 'a' ,title:"豆瓣影院热映"},
+  {key: 'b', title:"Flex Box Demo"}
 ];
 
 class HomeScreen extends Component {
@@ -71,7 +73,11 @@ class HomeScreen extends Component {
               this.props.navigation.push('DoubanMovie');
           }
           break;
-      
+        case 1:
+        {
+          this.props.navigation.push('FlexboxDemo');
+        }
+         break;
         default:
           break;
       };
@@ -90,6 +96,7 @@ const RootStack = StackNavigator(
   {
     Home: HomeScreen,
     DoubanMovie: DoubanMovie,
+    FlexboxDemo: FlexboxDemo,
   },
 );
 
