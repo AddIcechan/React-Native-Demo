@@ -15,9 +15,11 @@ import {
   Alert
 } from 'react-native';
 
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator, NavigationScreenProp } from 'react-navigation';
 
 import DoubanMovie from "./app/day01/DoubanMovie";
+import DBMovieRegion from './app/day01/DBMovieRegion';
+
 import FlexboxDemo from "./app/FlexboxDemo/FlexboxDemo";
 
 const dataList = [
@@ -37,19 +39,14 @@ class HomeScreen extends Component {
 
     return(
       <FlatList
-      // data={[{key: 'a'}, {key: 'b'}]}
-  // renderItem={({item}) => <Text>{item.key}</Text>}
         data={dataList}
         renderItem={this._renderItem}
-        // keyExtractor={this._keyExtractor}
         ItemSeparatorComponent={this._ItemSeparatorComponent}
         renderRow={this._renderRow}
         renderSeparator={this._renderSeparator}
         />
     );
   }
-
-  // _keyExtractor = (item, index) => item.ID
 
   _renderItem = ({item, index}) => {
     let rowIndex = Number(index) + 1;
@@ -96,6 +93,9 @@ const RootStack = StackNavigator(
   {
     Home: HomeScreen,
     DoubanMovie: DoubanMovie,
+    DBMovieRegion: DBMovieRegion,
+
+
     FlexboxDemo: FlexboxDemo,
   },
 );

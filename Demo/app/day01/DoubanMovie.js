@@ -6,19 +6,22 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
   FlatList,
   Image,
+  TouchableOpacity,
   TouchableHighlight,
+  Button,
 } from 'react-native';
+
+import { NavigationScreenProp } from "react-navigation";
+import DBMovieRegion from './DBMovieRegion';
+
+// import { DBMovieRegion } from "../day01/DBMovieRegion";
 
 const inTheatersURL = "https://api.douban.com/v2/movie/in_theaters";
 
 class MovieCell extends Component {
 
-    static navigationOptions = {
-        title: "Douban Movie",
-    }
     render(){
 
         return(
@@ -32,11 +35,7 @@ class MovieCell extends Component {
                         {this.props.item.title}
                     </Text>
                     <Text style={styles.movieInfo}>
-                        {
-                            this.props.item.year + " / "
-                             + this.props.item.directors.map(director => director.name).join(" / ")
-                              + this.props.item.casts.map( cast =>{ return cast.name}).join(" / ")
-                        }
+                        { this.fetchMovieInfo(this.props.item) }
                     </Text>
                 </View>
 
@@ -53,7 +52,13 @@ class MovieCell extends Component {
         );
     }
 
-}
+    fetchMovieInfo = (item) => {
+        return item.year + " / " 
+                + item.directors.map(director => director.name).join(" / ") 
+                + item.casts.map( cast =>{ return cast.name}).join(" / ");
+    };
+
+};
 
 var styles = StyleSheet.create({
 
@@ -118,7 +123,22 @@ var styles = StyleSheet.create({
 
 });
 
-export default class DoubanMovie extends React.Component {  
+export default class DoubanMovie extends Component {  
+
+    static navigationOptions = ({navigation, navigationOptions}) => {
+
+        return ({
+            title: "热映电影",
+            headerRight: (
+                <TouchableOpacity style={{flex: 1,flexDirection: 'row', alignContent: 'center',alignItems: 'center',justifyContent:'center', paddingRight: 12,}}
+                                onPress={() => { navigation.push("DBMovieRegion") }} >
+                    <Text style={{fontSize: 16,color:'black'}}>广州</Text>
+                    <Image  style={{marginLeft: 4, width: 10, height:10}} source={require("../day01/indicator_bottom.png")} />
+                </TouchableOpacity>
+            ),
+            
+        });
+    };
 
     constructor(props) {
 
@@ -182,3 +202,20 @@ export default class DoubanMovie extends React.Component {
   
 
 }
+
+// const DoubanMovieNavigatorView = StackNavigator(
+//     {
+
+//         // DoubanMovie: DBMovieRegion,
+//         DoubanMovie: DoubanMovie,
+//     // DBMovieRegion: {
+//     //     screen: DBMovieRegion,
+//     // },
+//     }
+// );
+
+// export default class DoubanMovieNavigator extends Component {
+//     render() {
+//         return <DoubanMovieNavigatorView/>
+//     }
+// }
