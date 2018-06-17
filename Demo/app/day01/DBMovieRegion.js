@@ -5,29 +5,11 @@ import {
     Text, 
     SectionList,
     StyleSheet,
-    TouchableHighlight,
+    TouchableOpacity,
     FlatList,
 } from 'react-native';
 
-import Cities from "../day01/Cities";
-
-const popularCities = [
-    "北京",
-    "上海",
-    "广州",
-    "深圳",
-    "成都",
-    "武汉",
-    "杭州",
-    "重庆",
-    "郑州",
-    "南京",
-    "西安",
-    "苏州",
-    "天津",
-    "长沙",
-    "福州",
-];
+import {popularCities, provinces, cities} from "../day01/Cities";
 
 export default class DBMovieRegion extends Component {
 
@@ -38,11 +20,26 @@ export default class DBMovieRegion extends Component {
     constructor(props) {
         super(props);
 
+        const capitals = []
+
+        for (let index = 65; index < 91; index++) {
+            capitals.push(String.fromCharCode(index))
+        }
+        console.log(provinces);
+        console.log(cities);
+        
+        
         const sections = [  {
             title: "热门城市",
             data:  [popularCities],
-            renderItem: this._renderPopularSection }
+            renderItem: this._renderPopularSection },
+            // provinces
         ];
+
+        for (let index = 0; index < provinces.length; index++) {
+            const element = provinces[index];
+            sections.push(element)
+        }
 
         this.state = {
             sections: sections,
@@ -55,7 +52,9 @@ export default class DBMovieRegion extends Component {
             <SectionList sections={this.state.sections}
                         renderItem={this._renderItem}
                         renderSectionHeader={this._renderSectionHeader}
-                        keyExtractor={this._keyExtractor}/>
+                        ItemSeparatorComponent={() => <View style={{backgroundColor:'#F4F4F4'}}/>}
+                        keyExtractor={this._keyExtractor}
+                        />
         );
     }
 
@@ -66,8 +65,10 @@ export default class DBMovieRegion extends Component {
     _keyExtractor=(item, index) => item + index;
 
     _renderItem = ({item, index, section: {title, data}}) => (
-
-        <Text key={index} style={styles.sectionPopularItem} >{item}</Text>
+        <TouchableOpacity style={{padding: 10,backgroundColor:'white'}}
+        onPress={()=>alert(item)}>
+            <Text key={index} style={{fontSize: 16, paddingLeft: 10,}} >{item}</Text>
+        </TouchableOpacity>
     );
 
     _renderPopularSection = ({item, index, section: {title, data}}) => {
@@ -78,16 +79,11 @@ export default class DBMovieRegion extends Component {
             const element = item[index];
             
             items.push(
-                <TouchableHighlight 
-                style={[styles.sectionPopularItem, 
-                        {justifyContent:'center',
-                        alignItems: 'center',
-                        width:100,
-                        height:30,
-                        marginTop: 14,}]}
+                <TouchableOpacity 
+                style={styles.sectionPopularItem}
                 onPress={()=> alert(element)}>
                     <Text style={{fontSize: 17, alignSelf: 'center',}} >{element}</Text>
-                </TouchableHighlight>
+                </TouchableOpacity>
             )
         }
 
@@ -117,10 +113,14 @@ const styles = StyleSheet.create({
     },
 
     sectionPopularItem: {
+        justifyContent:'center',
+        alignItems: 'center',
+        width:100,
+        height:30,
+        marginTop: 14,
         backgroundColor: 'white',
         borderColor: '#A1A1A1',
         borderRadius: 3,
         borderWidth: 1,
-        fontSize: 17,
-    },
+    }
 });
