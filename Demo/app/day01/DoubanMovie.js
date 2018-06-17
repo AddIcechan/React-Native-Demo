@@ -185,7 +185,6 @@ export default class DoubanMovie extends Component {
     fetch(inTheatersURL)
     .then((response) => response.json())
     .then( (responseJSON) => {
-        console.log(responseJSON.subjects);
         
         this.setState({
             _refreshing: false,
@@ -195,8 +194,11 @@ export default class DoubanMovie extends Component {
     .catch(error =>  { 
         this.setState({
             _refreshing: false,
+            items: []
         });
-        console.error(); 
+        alert();
+        alert("网络出错了！");
+        // console.error(); 
     });
   };
   
