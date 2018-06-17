@@ -38,7 +38,9 @@ export default class DBMovieRegion extends Component {
 
         for (let index = 0; index < provinces.length; index++) {
             const element = provinces[index];
-            sections.push(element)
+            if (element.data.length > 0) {
+                sections.push(element)
+            }
         }
 
         this.state = {
