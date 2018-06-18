@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {  View, Text, } from 'react-native';
 
 import { createStackNavigator } from "react-navigation";
 
@@ -22,7 +21,6 @@ export default class CustomRouter extends Component {
   render() {
     return (
       <StackNavigatorView/>
-        // <View style={{backgroundColor:'gray'}}/>
     );
   }
 }

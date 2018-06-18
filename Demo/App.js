@@ -15,8 +15,6 @@ import CustomRouter from "./app/CustomRouter";
 
 export default class App extends Component {
   render() {
-    // return <RootStack/>;
-    // return <View style={{backgroundColor:'white'}}/>
     return <CustomRouter/>;
   }
 }
