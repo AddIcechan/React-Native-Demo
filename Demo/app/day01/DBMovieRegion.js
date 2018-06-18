@@ -20,13 +20,10 @@ export default class DBMovieRegion extends Component {
     constructor(props) {
         super(props);
 
-        
-
         const sections = [  {
             title: "热门城市",
             data:  [popularCities],
             renderItem: this._renderPopularSection },
-            // provinces
         ];
 
         const capitals = []
@@ -34,7 +31,7 @@ export default class DBMovieRegion extends Component {
             const element = provinces[index];
             if (element.data.length > 0) {
                 sections.push(element)
-                capitals.push({key: element.title})
+                capitals.push({key: element.title, title: element.title})
             }
         }
 
@@ -47,10 +44,11 @@ export default class DBMovieRegion extends Component {
     render() {
         return (
             <View style={{flex: 1,flexDirection: 'row',alignItems: 'center',backgroundColor:'#F4F4F4'}}>
-                <SectionList sections={this.state.sections}
+                <SectionList ref="citySectionList" 
+                            sections={this.state.sections}
                             renderItem={this._renderItem}
                             renderSectionHeader={this._renderSectionHeader}
-                            ItemSeparatorComponent={() => <View style={{backgroundColor:'#F4F4F4'}}/>}
+                            ItemSeparatorComponent={({index}) => <View key={index} style={{backgroundColor:'#F4F4F4'}}/>}
                             keyExtractor={this._keyExtractor}
                 />
                 <FlatList style={{backgroundColor:'#F4F4F4'}} 
@@ -62,10 +60,15 @@ export default class DBMovieRegion extends Component {
     }
 
     _renderFlatListItem = ({item, index}) => (
-            <TouchableOpacity onPress={()=>alert(item.key)}>
-                <Text style={{fontSize:12, color:"#3D80E6", paddingBottom: 4,}}>{item.key}</Text>
+            <TouchableOpacity key={index} onPress={() => this._scrollToCitySection(index)}>
+                <Text style={{fontSize:12, color:"#3D80E6", paddingBottom: 4,}}>{item.title}</Text>
             </TouchableOpacity>
     );
+
+    _scrollToCitySection = (index) => {
+        console.log(index);
+        this.refs.citySectionList.scrollToLocation({itemIndex: 0, sectionIndex: (index + 1), viewOffset: 40});
+    };
 
     _renderSectionHeader = ({section: {title}}) => (
         <Text style={styles.sectionHeader}>{title}</Text>
@@ -88,7 +91,8 @@ export default class DBMovieRegion extends Component {
             const element = item[index];
             
             items.push(
-                <TouchableOpacity 
+                <TouchableOpacity
+                key={index} 
                 style={styles.sectionPopularItem}
                 onPress={()=> alert(element)}>
                     <Text style={{fontSize: 17, alignSelf: 'center',}} >{element}</Text>
