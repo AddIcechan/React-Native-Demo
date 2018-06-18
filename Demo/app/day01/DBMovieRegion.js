@@ -9,6 +9,8 @@ import {
     FlatList,
 } from 'react-native';
 
+import { SafeAreaView } from "react-navigation";
+
 import {popularCities, provinces, cities} from "../day01/Cities";
 
 export default class DBMovieRegion extends Component {
@@ -43,7 +45,7 @@ export default class DBMovieRegion extends Component {
 
     render() {
         return (
-            <View style={{flex: 1,flexDirection: 'row',alignItems: 'center',backgroundColor:'#F4F4F4'}}>
+            <SafeAreaView style={{flex: 1,flexDirection: 'row',alignItems: 'center',backgroundColor:'#F4F4F4'}}>
                 <SectionList ref="citySectionList" 
                             sections={this.state.sections}
                             renderItem={this._renderItem}
@@ -55,7 +57,7 @@ export default class DBMovieRegion extends Component {
                           data={this.state.capitals}
                           renderItem={this._renderFlatListItem}
                 />
-            </View>
+            </SafeAreaView>
         );
     }
 

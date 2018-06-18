@@ -13,10 +13,8 @@ import {
   Button,
 } from 'react-native';
 
-import { NavigationScreenProp } from "react-navigation";
+import { SafeAreaView } from "react-navigation";
 import DBMovieRegion from './DBMovieRegion';
-
-// import { DBMovieRegion } from "../day01/DBMovieRegion";
 
 const inTheatersURL = "https://api.douban.com/v2/movie/in_theaters";
 
@@ -26,7 +24,7 @@ class MovieCell extends Component {
 
         return(
 
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
 
                 <Image style={[styles.moviePoster]} source={{uri: this.props.item.images.medium}} />
                     
@@ -48,7 +46,7 @@ class MovieCell extends Component {
                     {/* <Button style={styles.buyBtn} title={"购票"} onPress={() => alert("fake")}/> */}
                 </View>
 
-            </View>
+            </SafeAreaView>
         );
     }
 
