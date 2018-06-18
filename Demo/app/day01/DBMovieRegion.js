@@ -20,15 +20,8 @@ export default class DBMovieRegion extends Component {
     constructor(props) {
         super(props);
 
-        const capitals = []
+        
 
-        for (let index = 65; index < 91; index++) {
-            capitals.push(String.fromCharCode(index))
-        }
-        console.log(provinces);
-        console.log(cities);
-        
-        
         const sections = [  {
             title: "热门城市",
             data:  [popularCities],
@@ -36,29 +29,43 @@ export default class DBMovieRegion extends Component {
             // provinces
         ];
 
+        const capitals = []
         for (let index = 0; index < provinces.length; index++) {
             const element = provinces[index];
             if (element.data.length > 0) {
                 sections.push(element)
+                capitals.push({key: element.title})
             }
         }
 
         this.state = {
             sections: sections,
+            capitals: capitals
         };
     };
 
     render() {
         return (
-
-            <SectionList sections={this.state.sections}
-                        renderItem={this._renderItem}
-                        renderSectionHeader={this._renderSectionHeader}
-                        ItemSeparatorComponent={() => <View style={{backgroundColor:'#F4F4F4'}}/>}
-                        keyExtractor={this._keyExtractor}
-                        />
+            <View style={{flex: 1,flexDirection: 'row',alignItems: 'center',backgroundColor:'#F4F4F4'}}>
+                <SectionList sections={this.state.sections}
+                            renderItem={this._renderItem}
+                            renderSectionHeader={this._renderSectionHeader}
+                            ItemSeparatorComponent={() => <View style={{backgroundColor:'#F4F4F4'}}/>}
+                            keyExtractor={this._keyExtractor}
+                />
+                <FlatList style={{backgroundColor:'#F4F4F4'}} 
+                          data={this.state.capitals}
+                          renderItem={this._renderFlatListItem}
+                />
+            </View>
         );
     }
+
+    _renderFlatListItem = ({item, index}) => (
+            <TouchableOpacity onPress={()=>alert(item.key)}>
+                <Text style={{fontSize:12, color:"#3D80E6", paddingBottom: 4,}}>{item.key}</Text>
+            </TouchableOpacity>
+    );
 
     _renderSectionHeader = ({section: {title}}) => (
         <Text style={styles.sectionHeader}>{title}</Text>
