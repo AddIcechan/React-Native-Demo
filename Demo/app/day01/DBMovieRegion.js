@@ -41,9 +41,18 @@ export default class DBMovieRegion extends Component {
             sections: sections,
             capitals: capitals
         };
+        
     };
 
     render() {
+
+        const { navigation } = this.props;
+
+        const currentCity = navigation.getParam("city");
+
+        console.log(currentCity);
+        
+
         return (
             <SafeAreaView style={{flex: 1,flexDirection: 'row',alignItems: 'center',backgroundColor:'#F4F4F4'}}>
                 <SectionList ref="citySectionList" 
@@ -96,7 +105,10 @@ export default class DBMovieRegion extends Component {
                 <TouchableOpacity
                 key={index} 
                 style={styles.sectionPopularItem}
-                onPress={()=> alert(element)}>
+                onPress={()=>{
+                    this.props.navigation.state.params.callback(element);
+                    this.props.navigation.pop();
+                }}>
                     <Text style={{fontSize: 17, alignSelf: 'center',}} >{element}</Text>
                 </TouchableOpacity>
             )

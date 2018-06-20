@@ -121,6 +121,8 @@ var styles = StyleSheet.create({
 
 });
 
+const defaultCity = "广州";
+
 export default class DoubanMovie extends Component {  
 
     static navigationOptions = ({navigation, navigationOptions}) => {
@@ -128,9 +130,14 @@ export default class DoubanMovie extends Component {
         return ({
             title: "热映电影",
             headerRight: (
+
                 <TouchableOpacity style={{flex: 1,flexDirection: 'row', alignContent: 'center',alignItems: 'center',justifyContent:'center', paddingRight: 12,}}
-                                onPress={() => { navigation.push("DBMovieRegion") }} >
-                    <Text style={{fontSize: 16,color:'black'}}>广州</Text>
+                                onPress={() => { navigation.push("DBMovieRegion",{callback: (city) => {
+                                        navigation.setParams({
+                                                city: city,
+                                        });
+                                }}) }} >
+                    <Text style={{fontSize: 16,color:'black'}}>{navigation.getParam("city")}</Text>
                     <Image  style={{marginLeft: 4, width: 10, height:10}} source={require("../day01/indicator_bottom.png")} />
                 </TouchableOpacity>
             ),
@@ -144,11 +151,19 @@ export default class DoubanMovie extends Component {
 
         this.state = {
             noneData: [],
-            _refreshing: true
+            _refreshing: true,
         };
 
         this._onRefresh();
+        
+    };
 
+    componentDidMount() {
+        console.log("componentDidMount");
+        
+        this.props.navigation.setParams({
+            city: defaultCity,
+           });
     };
 
  render() {
@@ -200,22 +215,10 @@ export default class DoubanMovie extends Component {
     });
   };
   
+  _gotoRegion = (navigation) => {
+      console.log(navigation);
+      
+    navigation.push("DBMovieRegion",{city: ""})
+  };
 
 }
-
-// const DoubanMovieNavigatorView = StackNavigator(
-//     {
-
-//         // DoubanMovie: DBMovieRegion,
-//         DoubanMovie: DoubanMovie,
-//     // DBMovieRegion: {
-//     //     screen: DBMovieRegion,
-//     // },
-//     }
-// );
-
-// export default class DoubanMovieNavigator extends Component {
-//     render() {
-//         return <DoubanMovieNavigatorView/>
-//     }
-// }
