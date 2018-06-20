@@ -24,7 +24,7 @@ class MovieCell extends Component {
 
         return(
 
-            <SafeAreaView style={styles.container}>
+            <View style={styles.container}>
 
                 <Image style={[styles.moviePoster]} source={{uri: this.props.item.images.medium}} />
                     
@@ -46,7 +46,7 @@ class MovieCell extends Component {
                     {/* <Button style={styles.buyBtn} title={"购票"} onPress={() => alert("fake")}/> */}
                 </View>
 
-            </SafeAreaView>
+            </View>
         );
     }
 
@@ -166,59 +166,58 @@ export default class DoubanMovie extends Component {
            });
     };
 
- render() {
-    return (
-        
-        <FlatList 
-        // 因为网络数据加载是异步的，所以这里的 data 需要进行判断。可以是 this.state.items ? this.state.items : [] , 也可以是如下面给个初值
-        data={this.state._refreshing ? this.state.noneData : (this.state.items ? this.state.items : this.state.noneData )}
-        renderItem = {this._renderItem}
-        keyExtractor = {this._keyExtractor}
-        onRefresh={this._onRefresh}
-        refreshing={this.state._refreshing}
+    render() {
+        return (
+            <SafeAreaView>
+                <FlatList 
+                // 因为网络数据加载是异步的，所以这里的 data 需要进行判断。可以是 this.state.items ? this.state.items : [] , 也可以是如下面给个初值
+                data={this.state._refreshing ? this.state.noneData : (this.state.items ? this.state.items : this.state.noneData )}
+                renderItem = {this._renderItem}
+                keyExtractor = {this._keyExtractor}
+                onRefresh={this._onRefresh}
+                refreshing={this.state._refreshing}
 
-         />
-    );
-  }
+                />
+            </SafeAreaView>
+        );
+    }
 
-  _keyExtractor = (item, index) => item.id;
+    _keyExtractor = (item, index) => item.id;
 
-  _renderItem = ({item, index}) => {
-      return(
-        <MovieCell item={item}/>
-      );
-  };
+    _renderItem = ({item, index}) => {
+        return(
+            <MovieCell item={item}/>
+        );
+    };
 
-  _onRefresh = () => {
+    _onRefresh = () => {
 
-    this.setState({
-        _refreshing: true,
-    });
-
-    fetch(inTheatersURL)
-    .then((response) => response.json())
-    .then( (responseJSON) => {
-        
         this.setState({
-            _refreshing: false,
-            items: responseJSON.subjects
+            _refreshing: true,
         });
-    })
-    .catch(error =>  { 
-        this.setState({
-            _refreshing: false,
-            items: []
+
+        fetch(inTheatersURL)
+        .then((response) => response.json())
+        .then( (responseJSON) => {
+            
+            this.setState({
+                _refreshing: false,
+                items: responseJSON.subjects
+            });
+        })
+        .catch(error =>  { 
+            this.setState({
+                _refreshing: false,
+                items: []
+            });
+            alert();
+            alert("网络出错了！");
+            // console.error(); 
         });
-        alert();
-        alert("网络出错了！");
-        // console.error(); 
-    });
-  };
-  
-  _gotoRegion = (navigation) => {
-      console.log(navigation);
-      
-    navigation.push("DBMovieRegion",{city: ""})
-  };
+    };
+    
+    _gotoRegion = (navigation) => {
+        navigation.push("DBMovieRegion",{city: ""})
+    };
 
 }

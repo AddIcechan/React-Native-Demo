@@ -1,70 +1,70 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-  Image,
+    StyleSheet,
+    Text,
+    View,
+    FlatList,
+    TouchableOpacity,
+    Image,
 } from 'react-native';
 
 const dataList = [
-  {key: 'a' ,title:"豆瓣影院热映"},
-  {key: 'b', title:"Flex Box Demo"}
+    {key: 'a' ,title:"豆瓣影院热映"},
+    {key: 'b', title:"Flex Box Demo"}
 ];
 
 export default class HomeScreen extends Component {
 
-  static navigationOptions = {
-      title: "Home",
-  }
+    static navigationOptions = {
+        title: "Home",
+    }
 
-  render(){
+    render(){
 
-    const { navigation } = this.props;
+        const { navigation } = this.props;
 
-    return(
-      <FlatList
-        data={dataList}
-        renderItem={this._renderItem}
-        ItemSeparatorComponent={this._ItemSeparatorComponent}
-        renderRow={this._renderRow}
-        renderSeparator={this._renderSeparator}
-        />
-    );
-  }
+        return(
+        <FlatList
+            data={dataList}
+            renderItem={this._renderItem}
+            ItemSeparatorComponent={this._ItemSeparatorComponent}
+            renderRow={this._renderRow}
+            renderSeparator={this._renderSeparator}
+            />
+        );
+    }
 
-  _renderItem = ({item, index}) => {
-    let rowIndex = Number(index) + 1;
-    return (
-      <TouchableOpacity style={styles.container} 
-      onPress={() => { this._onPress(index) } }>
-        <Text style={styles.rowTitle}> {rowIndex}. {item.title} </Text>
-        <Image source={require('./sources/indicator_right.png')} />
-      </TouchableOpacity>
-    );
-  };
+    _renderItem = ({item, index}) => {
+        let rowIndex = Number(index) + 1;
+        return (
+        <TouchableOpacity style={styles.container} 
+        onPress={() => { this._onPress(index) } }>
+            <Text style={styles.rowTitle}> {rowIndex}. {item.title} </Text>
+            <Image source={require('./sources/indicator_right.png')} />
+        </TouchableOpacity>
+        );
+    };
 
-  _ItemSeparatorComponent = () => {
-      return <View style={styles.separator}/>;
-  };
+    _ItemSeparatorComponent = () => {
+        return <View style={styles.separator}/>;
+    };
 
-  _onPress = (index) => {
-      switch (index) {
-        case 0:
-          {
-              this.props.navigation.push('DoubanMovie');
-          }
-          break;
-        case 1:
-        {
-          this.props.navigation.push('FlexboxDemo');
-        }
-         break;
-        default:
-          break;
-      };
-  };
+    _onPress = (index) => {
+        switch (index) {
+            case 0:
+            {
+                this.props.navigation.push('DoubanMovie');
+            }
+            break;
+            case 1:
+            {
+            this.props.navigation.push('FlexboxDemo');
+            }
+            break;
+            default:
+            break;
+        };
+    };
   
 
 }

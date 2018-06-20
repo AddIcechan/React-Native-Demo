@@ -13,6 +13,8 @@ import { SafeAreaView } from "react-navigation";
 
 import {popularCities, provinces, cities} from "../day01/Cities";
 
+const municipalities = ["北京", "上海", "天津", "重庆"];
+
 export default class DBMovieRegion extends Component {
 
     static navigationOptions = {
@@ -46,13 +48,6 @@ export default class DBMovieRegion extends Component {
 
     render() {
 
-        const { navigation } = this.props;
-
-        const currentCity = navigation.getParam("city");
-
-        console.log(currentCity);
-        
-
         return (
             <SafeAreaView style={{flex: 1,flexDirection: 'row',alignItems: 'center',backgroundColor:'#F4F4F4'}}>
                 <SectionList ref="citySectionList" 
@@ -77,7 +72,6 @@ export default class DBMovieRegion extends Component {
     );
 
     _scrollToCitySection = (index) => {
-        console.log(index);
         this.refs.citySectionList.scrollToLocation({itemIndex: 0, sectionIndex: (index + 1), viewOffset: 40});
     };
 
@@ -87,12 +81,24 @@ export default class DBMovieRegion extends Component {
 
     _keyExtractor=(item, index) => item + index;
 
-    _renderItem = ({item, index, section: {title, data}}) => (
-        <TouchableOpacity style={{padding: 10,backgroundColor:'white'}}
-        onPress={()=>alert(item)}>
-            <Text key={index} style={{fontSize: 16, paddingLeft: 10,}} >{item}</Text>
-        </TouchableOpacity>
-    );
+    _renderItem = ({item, index, section: {title, data}}) => {
+        
+        return (<TouchableOpacity style={{padding: 10,backgroundColor:'white'}}
+                    onPress={ () => {
+
+                        if (municipalities.indexOf(item) < 0) {
+                            // 进入对应的地级市选择
+                            this.props.navigation.push("DBMovieCity",{provinces: item, 
+                                                                        callback: this.props.navigation.state.params.callback})
+                        } else {
+                            // 直辖市直接 pop 回传
+                            this.props.navigation.state.params.callback(item);
+                            this.props.navigation.pop();
+                        }
+                    }}>
+                    <Text key={index} style={{fontSize: 16, paddingLeft: 10,}} >{item}</Text>
+                </TouchableOpacity>);
+    };
 
     _renderPopularSection = ({item, index, section: {title, data}}) => {
 
