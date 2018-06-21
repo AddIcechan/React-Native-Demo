@@ -159,7 +159,6 @@ export default class DoubanMovie extends Component {
     };
 
     componentDidMount() {
-        console.log("componentDidMount");
         
         this.props.navigation.setParams({
             city: defaultCity,

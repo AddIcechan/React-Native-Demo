@@ -43,7 +43,7 @@ export default class DBMovieCity extends Component {
         <TouchableOpacity key={item.key}
                          onPress={() => {
                             this.props.navigation.state.params.callback(item.city);
-                            this.props.navigation.pop("DoubanMovie");
+                            this.props.navigation.pop(2);
                          }}>
             <Text style={{fontSize: 18, padding: 20, backgroundColor: 'white'}}>{item.city}</Text>
         </TouchableOpacity>

@@ -85,15 +85,21 @@ export default class DBMovieRegion extends Component {
         
         return (<TouchableOpacity style={{padding: 10,backgroundColor:'white'}}
                     onPress={ () => {
+                        const navigation = this.props.navigation;
 
                         if (municipalities.indexOf(item) < 0) {
                             // 进入对应的地级市选择
-                            this.props.navigation.push("DBMovieCity",{provinces: item, 
-                                                                        callback: this.props.navigation.state.params.callback})
+                            const params = {
+                                provinces: item, 
+                                callback: (city) => {
+                                    navigation.state.params.callback(city);
+                                },
+                            };
+                            navigation.push("DBMovieCity",params);
                         } else {
                             // 直辖市直接 pop 回传
-                            this.props.navigation.state.params.callback(item);
-                            this.props.navigation.pop();
+                            navigation.state.params.callback(item);
+                            navigation.pop();
                         }
                     }}>
                     <Text key={index} style={{fontSize: 16, paddingLeft: 10,}} >{item}</Text>
