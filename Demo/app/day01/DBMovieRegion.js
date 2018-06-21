@@ -7,11 +7,14 @@ import {
     StyleSheet,
     TouchableOpacity,
     FlatList,
+    TextInput,
+    Image,
 } from 'react-native';
 
 import { SafeAreaView } from "react-navigation";
 
 import {popularCities, provinces, cities} from "../day01/Cities";
+import { white } from 'ansi-colors';
 
 const municipalities = ["北京", "上海", "天津", "重庆"];
 
@@ -49,18 +52,33 @@ export default class DBMovieRegion extends Component {
     render() {
 
         return (
-            <SafeAreaView style={{flex: 1,flexDirection: 'row',alignItems: 'center',backgroundColor:'#F4F4F4'}}>
-                <SectionList ref="citySectionList" 
-                            sections={this.state.sections}
-                            renderItem={this._renderItem}
-                            renderSectionHeader={this._renderSectionHeader}
-                            ItemSeparatorComponent={({index}) => <View key={index} style={{backgroundColor:'#F4F4F4'}}/>}
-                            keyExtractor={this._keyExtractor}
-                />
-                <FlatList style={{backgroundColor:'#F4F4F4'}} 
-                          data={this.state.capitals}
-                          renderItem={this._renderFlatListItem}
-                />
+            <SafeAreaView style={{backgroundColor:'white'}}>
+                {/* <View style={{height: 60, paddingLeft: 20,paddingRight: 20,paddingTop: 8,paddingBottom: 8,}}> */}
+                    <View style={styles.searcthTextInputBg} >
+                        <Image style={styles.searcthTextInputIcon}
+                                source={require("../sources/search.png")}/>
+                        <TextInput style={styles.searcthTextInput}
+                                    clearButtonMode="while-editing" 
+                                    placeholder=" 输入城市名查询"
+                                    
+                                    />
+                    </View>
+                {/* </View> */}
+                
+                <View style={{flexDirection: 'row',alignItems: 'center',backgroundColor:'#F4F4F4'}} >
+                    <SectionList ref="citySectionList" 
+                                sections={this.state.sections}
+                                renderItem={this._renderItem}
+                                renderSectionHeader={this._renderSectionHeader}
+                                ItemSeparatorComponent={({index}) => <View key={index} style={{backgroundColor:'#F4F4F4'}}/>}
+                                keyExtractor={this._keyExtractor}
+                    />
+                    <FlatList style={{backgroundColor:'#F4F4F4'}} 
+                            data={this.state.capitals}
+                            renderItem={this._renderFlatListItem}
+                    />
+                </View>
+
             </SafeAreaView>
         );
     }
@@ -161,5 +179,28 @@ const styles = StyleSheet.create({
         borderColor: '#A1A1A1',
         borderRadius: 3,
         borderWidth: 1,
-    }
+    },
+
+    searcthTextInputBg: {
+        flexDirection: 'row',
+        height: 60,
+        paddingLeft: 16,
+        paddingRight: 16,
+        paddingTop: 10,
+        paddingBottom: 10,
+    },
+
+    searcthTextInputIcon: {
+        padding: 10,
+        marginRight: 4,
+        alignSelf: 'center',
+    },
+
+    searcthTextInput: {
+        flex: 1, 
+        backgroundColor: '#F4F4F4', 
+        borderRadius: 3,
+        paddingLeft: 4,
+        color: 'black',
+    },
 });
