@@ -10,6 +10,8 @@ import FlexboxDemo from "./FlexboxDemo/FlexboxDemo";
 
 import TextInputDemo from "./TextInputDemo/TextInputDemo";
 
+import AnimatedDemo from "./Animated/AnimatedDemo";
+
 const StackNavigatorView = createStackNavigator(
     {
       Home: HomeScreen,
@@ -20,6 +22,8 @@ const StackNavigatorView = createStackNavigator(
       FlexboxDemo: FlexboxDemo,
 
       TextInputDemo: TextInputDemo,
+
+      AnimatedDemo: AnimatedDemo,
     }
 );
 

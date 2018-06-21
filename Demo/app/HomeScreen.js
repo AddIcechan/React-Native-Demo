@@ -12,6 +12,7 @@ const dataList = [
     {key: 'a' ,title: "豆瓣影院热映"},
     {key: 'b', title: "Flex Box Demo"},
     {key: 'c', title: "TextInputDemo"},
+    {key: 'd', title: "AnimatedDemo"},
 ];
 
 export default class HomeScreen extends Component {
@@ -67,6 +68,11 @@ export default class HomeScreen extends Component {
             case 2:
             {
                 navigation.push('TextInputDemo');
+            }
+            break;
+            case 3:
+            {
+                navigation.push("AnimatedDemo");   
             }
             break;
             default:
