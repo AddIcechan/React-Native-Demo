@@ -9,8 +9,9 @@ import {
 } from 'react-native';
 
 const dataList = [
-    {key: 'a' ,title:"豆瓣影院热映"},
-    {key: 'b', title:"Flex Box Demo"}
+    {key: 'a' ,title: "豆瓣影院热映"},
+    {key: 'b', title: "Flex Box Demo"},
+    {key: 'c', title: "TextInputDemo"},
 ];
 
 export default class HomeScreen extends Component {
@@ -50,15 +51,22 @@ export default class HomeScreen extends Component {
     };
 
     _onPress = (index) => {
+
+        const navigation = this.props.navigation;
+
         switch (index) {
             case 0:
             {
-                this.props.navigation.push('DoubanMovie');
+                navigation.push('DoubanMovie');
             }
             break;
             case 1:
             {
-            this.props.navigation.push('FlexboxDemo');
+                navigation.push('FlexboxDemo');
+            }
+            case 2:
+            {
+                navigation.push('TextInputDemo');
             }
             break;
             default:

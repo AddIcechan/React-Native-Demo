@@ -8,6 +8,8 @@ import DBMovieRegion from './day01/DBMovieRegion';
 import DBMovieCity from "./day01/DBMovieCity";
 import FlexboxDemo from "./FlexboxDemo/FlexboxDemo";
 
+import TextInputDemo from "./TextInputDemo/TextInputDemo";
+
 const StackNavigatorView = createStackNavigator(
     {
       Home: HomeScreen,
@@ -16,6 +18,8 @@ const StackNavigatorView = createStackNavigator(
       DBMovieCity: DBMovieCity,
 
       FlexboxDemo: FlexboxDemo,
+
+      TextInputDemo: TextInputDemo,
     }
 );
 
