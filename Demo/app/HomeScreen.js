@@ -13,6 +13,7 @@ const dataList = [
     {key: 'b', title: "Flex Box Demo"},
     {key: 'c', title: "TextInputDemo"},
     {key: 'd', title: "AnimatedDemo"},
+    {key: 'e', title: "Flex Box Demo 1"},
 ];
 
 export default class HomeScreen extends Component {
@@ -65,6 +66,7 @@ export default class HomeScreen extends Component {
             {
                 navigation.push('FlexboxDemo');
             }
+            break;
             case 2:
             {
                 navigation.push('TextInputDemo');
@@ -73,6 +75,11 @@ export default class HomeScreen extends Component {
             case 3:
             {
                 navigation.push("AnimatedDemo");   
+            }
+            break;
+            case 4:
+            {
+                navigation.push('FlexboxDemo1');
             }
             break;
             default:

@@ -149,6 +149,9 @@ export default class DoubanMovie extends Component {
 
         super(props);
 
+        
+        
+
         this.state = {
             noneData: [],
             _refreshing: true,

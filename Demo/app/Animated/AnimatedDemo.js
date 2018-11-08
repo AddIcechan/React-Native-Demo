@@ -18,6 +18,23 @@ export default class AnimatedDemo extends Component {
             title: "热映电影",
     });
 
+    // static navigationOptions = {
+    //     title: "AnimatedDemo",
+    //     header: ({state}) => {
+    //                     return {
+    //                         style: {
+    //                             position: 'absolute',
+    //                             top: 0,
+    //                             left: 0,
+    //                             right: 0,
+    //                             overflow: 'hidden',
+    //                         },
+    //                     };
+    //                 }
+    // }
+        
+    
+
     animationBack() {
         const defaultOpactiy = new Animated.Value(0.3);
 
@@ -65,6 +82,8 @@ export default class AnimatedDemo extends Component {
     constructor(props) {
         super(props);
 
+        this._animatedValue = new Animated.Value(0);
+
         const defaultOpactiy = new Animated.Value(0.3);
 
         const defaultTop = new Animated.Value(height);
@@ -77,6 +96,15 @@ export default class AnimatedDemo extends Component {
         });
     };
 
+    componentDidMount() {
+        this.props.navigation.setParams({animatedValue: this._animatedValue.interpolate({
+          inputRange: [0, 80],
+          outputRange: [0, -80],
+          extrapolate: 'clamp'
+        })
+      });
+      }
+
     render() {
         console.log("screenHeight:" + height + "\n" + "screenWidth:" + width);
         
@@ -86,7 +114,7 @@ export default class AnimatedDemo extends Component {
                     <TouchableOpacity style={{flexDirection: 'row', alignContent: 'center',alignItems: 'center',justifyContent:'center', 
                     paddingRight: 12, width: 100, height: 50}}
                                     onPress= { () => {
-                                        this.animationFun();
+                                        // Animated.event([{nativeEvent: {contentOffset: {y: this._animatedValue}}}]);
                                     } }>
                         <Text style={{fontSize: 16,color:'black'}}>点击开始动画</Text>
                     </TouchableOpacity>
@@ -102,7 +130,7 @@ export default class AnimatedDemo extends Component {
                                     onPress= { () => {
                                         LayoutAnimation.linear();
                                         this.setState({
-                                            _top: 50,
+                                            _top: -50,
                                         });
                                     } }>
                         <Text style={{fontSize: 16,color:'black'}}>LayoutAnimationStart</Text>
@@ -121,10 +149,21 @@ export default class AnimatedDemo extends Component {
                  width: 50, height: 50, backgroundColor: 'blue', position: "absolute",top: this.state._top,left: this.state._left}}/> */}
 
                 </View>
-                <Animated.View style={{width: width, height: height, 
-                                        backgroundColor: 'yellow',position:"absolute",
+                <Animated.View style={{width: width, height: height,  flexDirection: 'column',alignContent: 'center',alignItems: 'center',
+                                        justifyContent:'center',backgroundColor: 'yellow',position:"absolute",
                                         top: this.state._top, left: 0,
-                                    }} />
+                                    }} >
+                    <TouchableOpacity style={{alignContent: 'center',alignItems: 'center',justifyContent:'center', 
+                    paddingRight: 12, width: 100, height: 50}}
+                                    onPress= { () => {
+                                        LayoutAnimation.linear();
+                                        this.setState({
+                                            _top: height,
+                                        });
+                                    } }>
+                        <Text style={{fontSize: 16,color:'black'}}>LayoutAnimationBack</Text>
+                    </TouchableOpacity>        
+                </Animated.View>
             </View>
             
         );

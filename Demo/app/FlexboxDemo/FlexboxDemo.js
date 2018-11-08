@@ -5,9 +5,25 @@ import {
     StyleSheet,
 } from 'react-native';
 
-export default class FlexboxDemo extends Component {
+
+
+class FlexboxDemo extends Component {
     static navigationOptions = {
         title: "FlexboxDemo",
+    }
+    render() {
+        return (
+            <View style={{flex: 1,flexDirection: 'column',}}>
+                 <View style={[{backgroundColor:'gray', height: 80}]}/>
+                 <View style={[{flex: 1, backgroundColor:'yellow'}]}/>
+            </View>
+        );
+    }
+}
+
+class FlexboxDemo1 extends Component {
+    static navigationOptions = {
+        title: "FlexboxDemo1",
     }
     render() {
         return (
@@ -19,6 +35,12 @@ export default class FlexboxDemo extends Component {
         );
     }
 }
+
+export {FlexboxDemo, FlexboxDemo1};
+
+// export default class FlexboxDemo extends Component {
+   
+// }
 
 const styles = StyleSheet.create({
     container: {

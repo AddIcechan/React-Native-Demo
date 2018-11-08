@@ -6,7 +6,7 @@ import HomeScreen from "./HomeScreen";
 import DoubanMovie from "./day01/DoubanMovie";
 import DBMovieRegion from './day01/DBMovieRegion';
 import DBMovieCity from "./day01/DBMovieCity";
-import FlexboxDemo from "./FlexboxDemo/FlexboxDemo";
+import {FlexboxDemo, FlexboxDemo1} from "./FlexboxDemo/FlexboxDemo";
 
 import TextInputDemo from "./TextInputDemo/TextInputDemo";
 
@@ -20,6 +20,8 @@ const StackNavigatorView = createStackNavigator(
       DBMovieCity: DBMovieCity,
 
       FlexboxDemo: FlexboxDemo,
+
+      FlexboxDemo1: FlexboxDemo1,
 
       TextInputDemo: TextInputDemo,
 

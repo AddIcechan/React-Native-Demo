@@ -9,6 +9,7 @@ import {
     FlatList,
     TextInput,
     Image,
+    Animated,
 } from 'react-native';
 
 import { SafeAreaView } from "react-navigation";
@@ -53,17 +54,18 @@ export default class DBMovieRegion extends Component {
 
         return (
             <SafeAreaView style={{backgroundColor:'white'}}>
-                {/* <View style={{height: 60, paddingLeft: 20,paddingRight: 20,paddingTop: 8,paddingBottom: 8,}}> */}
-                    <View style={styles.searcthTextInputBg} >
-                        <Image style={styles.searcthTextInputIcon}
-                                source={require("../sources/search.png")}/>
-                        <TextInput style={styles.searcthTextInput}
-                                    clearButtonMode="while-editing" 
-                                    placeholder=" 输入城市名查询"
-                                    
-                                    />
-                    </View>
-                {/* </View> */}
+
+                <Animated.View style={styles.searcthTextInputBg} 
+                            
+                >
+                    <Image style={styles.searcthTextInputIcon}
+                            source={require("../sources/search.png")}/>
+                    <TextInput style={styles.searcthTextInput}
+                                clearButtonMode="while-editing" 
+                                placeholder=" 输入城市名查询"
+                                onChangeText = { (text) => this.searchCity(text)}
+                                />
+                </Animated.View>
                 
                 <View style={{flexDirection: 'row',alignItems: 'center',backgroundColor:'#F4F4F4'}} >
                     <SectionList ref="citySectionList" 
@@ -81,6 +83,11 @@ export default class DBMovieRegion extends Component {
 
             </SafeAreaView>
         );
+    }
+
+    searchCity(text) {
+
+        
     }
 
     _renderFlatListItem = ({item, index}) => (
